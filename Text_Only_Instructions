@@ -1,0 +1,40 @@
+Shareable model used during UIUC EoH
+https://teachablemachine.withgoogle.com/models/ZrzPwt0_O/
+
+
+Instructions to set up and use the Teachable Machines image trainer, micro:bit, and Snap Circuits:
+1.	Set up the Teachable Machines image trainer: a. Visit the Teachable Machines website at https://teachablemachine.withgoogle.com/. b. Click on "Get Started." c. Select "Image Project." d. Train your three classes (Class 1, Class 2, and Class 3) with images. Remember to include a couple of inaccurate images in Class 1 and Class 2 to represent hacked machine training data. e. Once trained, click "Export Model" and select "Upload my model."
+2.	Connect the Snap Circuits to the micro:bit: a. Connect the white LED to the P0 pin on the micro:bit. b. Connect the yellow LED to the P1 pin on the micro:bit. c. Connect the motor to the P2 pin on the micro:bit.
+3.	Upload the provided Python code to the micro:bit: 
+
+serialData = ""
+serial.redirect(SerialPin.USB_TX, SerialPin.USB_RX, BaudRate.BAUD_RATE9600)
+
+def on_forever():
+    global serialData
+    serialData = serial.read_string()
+    if serialData == "Class 1":
+        basic.show_number(1)
+        pins.digital_write_pin(DigitalPin.P0, 1)
+        pins.digital_write_pin(DigitalPin.P1, 0)
+        pins.digital_write_pin(DigitalPin.P2, 0)
+    if serialData == "Class 2":
+        basic.show_number(2)
+        pins.digital_write_pin(DigitalPin.P0, 0)
+        pins.digital_write_pin(DigitalPin.P1, 1)
+        pins.digital_write_pin(DigitalPin.P2, 0)
+    if serialData == "Class 3":
+        basic.show_number(3)
+        pins.digital_write_pin(DigitalPin.P0, 0)
+        pins.digital_write_pin(DigitalPin.P1, 0)
+        pins.digital_write_pin(DigitalPin.P2, 1)
+    basic.pause(200)
+basic.forever(on_forever)
+
+ 
+
+1.	a. Go to the micro:bit Python Editor at https://python.microbit.org/. b. Copy the provided Python code and paste it into the editor or go to https://makecode.microbit.org and manually create the block logic provided.. c. Click on "Download" to save the .hex file to your computer. d. Connect your micro:bit to your computer using a USB cable. e. Drag and drop the downloaded .hex file onto the micro:bit drive in your file explorer.
+2.	Connect the micro:bit to the AI Training website: a. Go to the website that supports connecting a micro:bit to a Teachable Machines model (https://ai-training.glitch.me)   b. Follow the instructions on the website to connect your micro:bit via USB.
+3.	Test the setup: a. Show the trained images to the webcam or camera connected to the Teachable Machines model. b. Observe the micro:bit display and the activation of the corresponding Snap Circuits components (white LED, yellow LED, or motor) based on the detected class.
+The students can now learn about machine learning, circuit design, and cybersecurity by observing how the Teachable Machines model classifies the images and how the micro:bit and Snap Circuits respond to the detected classes. Students should also discuss the implications of inaccurate or hacked training data on the performance of the AI model.
+
